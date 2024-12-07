@@ -1,0 +1,187 @@
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 p-4">
+    <div class="w-full max-w-md bg-white rounded-xl shadow-2xl overflow-hidden">
+      <div class="p-8">
+        <h2 class="text-center text-3xl font-bold text-gray-800 mb-6">
+          Customer Sign Up
+        </h2>
+  
+        <form [formGroup]="customerSignupForm" (ngSubmit)="onSubmit()" class="space-y-6">
+          <!-- Name Input -->
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a4 4 0 11-8 0 4 4 0 018 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14a4 4 0 11-8 0 4 4 0 018 0zm0 0v3a2 2 0 002 2h3" />
+              </svg>
+            </div>
+            <input
+              type="text"
+              formControlName="name"
+              placeholder="Full Name"
+              class="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition duration-300 ease-in-out"
+            />
+            <div
+              *ngIf="
+                customerSignupForm.get('name')?.invalid &&
+                (customerSignupForm.get('name')?.dirty || customerSignupForm.get('name')?.touched)
+              "
+              class="text-red-500 text-xs mt-1"
+            >
+              <div *ngIf="customerSignupForm.get('name')?.hasError('required')">
+                Name is required
+              </div>
+              <div *ngIf="customerSignupForm.get('name')?.hasError('minlength')">
+                Name must be at least 2 characters long
+              </div>
+            </div>
+          </div>
+  
+          <!-- Email Input -->
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m9-9a9 9 0 00-9-9v0" />
+              </svg>
+            </div>
+            <input
+              type="email"
+              formControlName="email"
+              placeholder="Email address"
+              class="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition duration-300 ease-in-out"
+            />
+            <div
+              *ngIf="
+                customerSignupForm.get('email')?.invalid &&
+                (customerSignupForm.get('email')?.dirty || customerSignupForm.get('email')?.touched)
+              "
+              class="text-red-500 text-xs mt-1"
+            >
+              <div *ngIf="customerSignupForm.get('email')?.hasError('required')">
+                Email is required
+              </div>
+              <div *ngIf="customerSignupForm.get('email')?.hasError('email')">
+                Please enter a valid email
+              </div>
+            </div>
+          </div>
+  
+          <!-- Tickets to Purchase Input -->
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+            </div>
+            <input
+              type="number"
+              formControlName="ticketsToPurchase"
+              placeholder="Tickets to Purchase"
+              class="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition duration-300 ease-in-out"
+            />
+            <div
+              *ngIf="
+                customerSignupForm.get('ticketsToPurchase')?.invalid &&
+                (customerSignupForm.get('ticketsToPurchase')?.dirty || customerSignupForm.get('ticketsToPurchase')?.touched)
+              "
+              class="text-red-500 text-xs mt-1"
+            >
+              <div *ngIf="customerSignupForm.get('ticketsToPurchase')?.hasError('required')">
+                Tickets to purchase is required
+              </div>
+              <div *ngIf="customerSignupForm.get('ticketsToPurchase')?.hasError('min')">
+                Tickets to purchase must be at least 1
+              </div>
+            </div>
+          </div>
+  
+          <!-- Ticket Retrieval Interval Input -->
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <input
+              type="number"
+              formControlName="ticketRetrievalInterval"
+              placeholder="Ticket Retrieval Interval (minutes)"
+              class="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition duration-300 ease-in-out"
+            />
+            <div
+              *ngIf="
+                customerSignupForm.get('ticketRetrievalInterval')?.invalid &&
+                (customerSignupForm.get('ticketRetrievalInterval')?.dirty || customerSignupForm.get('ticketRetrievalInterval')?.touched)
+              "
+              class="text-red-500 text-xs mt-1"
+            >
+              <div *ngIf="customerSignupForm.get('ticketRetrievalInterval')?.hasError('required')">
+                Ticket retrieval interval is required
+              </div>
+              <div *ngIf="customerSignupForm.get('ticketRetrievalInterval')?.hasError('min')">
+                Interval must be at least 1 minute
+              </div>
+            </div>
+          </div>
+  
+          <!-- Password Input -->
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              </svg>
+            </div>
+            <input
+              type="password"
+              formControlName="password"
+              placeholder="Password"
+              class="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition duration-300 ease-in-out"
+            />
+            <div
+              *ngIf="
+                customerSignupForm.get('password')?.invalid &&
+                (customerSignupForm.get('password')?.dirty || customerSignupForm.get('password')?.touched)
+              "
+              class="text-red-500 text-xs mt-1"
+            >
+              <div *ngIf="customerSignupForm.get('password')?.hasError('required')">
+                Password is required
+              </div>
+              <div *ngIf="customerSignupForm.get('password')?.hasError('minlength')">
+                Password must be at least 6 characters
+              </div>
+            </div>
+          </div>
+  
+          <div *ngIf="errorMessage" class="text-red-500 text-sm text-center">
+            {{ errorMessage }}
+          </div>
+  
+          <button
+            type="submit"
+            [disabled]="customerSignupForm.invalid"
+            class="w-full bg-indigo-600 text-white py-3 rounded-lg hover:bg-indigo-700 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50"
+          >
+            Sign Up
+          </button>
+        </form>
+  
+        <div class="mt-6 text-center space-y-4">
+          <button
+            type="button"
+            (click)="navigateToCustomerLogin()"
+            class="text-sm text-indigo-600 hover:text-indigo-500 transition duration-300 ease-in-out"
+          >
+            Already have an account? Sign In
+          </button>
+          
+          <button
+            type="button"
+            (click)="navigateToVendorSignup()"
+            class="block w-full text-sm text-center text-gray-600 hover:text-indigo-600 transition duration-300 ease-in-out"
+          >
+            New to our platform? Sign Up as a Vendor
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
