@@ -1,0 +1,48 @@
+<div class="min-h-screen bg-gray-100 p-6">
+    <div class="container mx-auto">
+      <h1 class="text-3xl font-bold mb-6">Vendor Dashboard</h1>
+      
+      <!-- Vendor Details Card -->
+      <div class="bg-white shadow-md rounded-lg p-6 mb-6">
+        <h2 class="text-2xl font-semibold mb-4">Vendor Profile</h2>
+        <div *ngIf="vendorDashboardData">
+          <p><strong>Name:</strong> {{ vendorDashboardData.vendorDetails.name }}</p>
+          <p><strong>Email:</strong> {{ vendorDashboardData.vendorDetails.email }}</p>
+          <p><strong>Status:</strong> 
+            <span [ngClass]="vendorDashboardData.vendorDetails.isActive ? 'text-green-600' : 'text-red-600'">
+              {{ vendorDashboardData.vendorDetails.isActive ? 'Active' : 'Inactive' }}
+            </span>
+          </p>
+          <p><strong>Tickets per Release:</strong> {{ vendorDashboardData.vendorDetails.ticketsPerRelease }}</p>
+          <p><strong>Ticket Release Interval:</strong> {{ vendorDashboardData.vendorDetails.ticketReleaseInterval }} days</p>
+        </div>
+      </div>
+
+      <!-- Sales Statistics Card -->
+      <div class="bg-white shadow-md rounded-lg p-6 mb-6">
+        <h2 class="text-2xl font-semibold mb-4">Sales Statistics</h2>
+        <div *ngIf="vendorDashboardData">
+          <p><strong>Total Tickets Sold:</strong> {{ vendorDashboardData.vendorDetails.totalTicketsSold }}</p>
+          <p><strong>Total Revenue:</strong> ${{ vendorDashboardData.salesStatistics.totalRevenue | number:'1.2-2' }}</p>
+          <p><strong>Average Tickets per Sale:</strong> {{ vendorDashboardData.salesStatistics.averageTicketsPerSale | number:'1.2-2' }}</p>
+          <p><strong>Last Month Sales:</strong> ${{ vendorDashboardData.salesStatistics.lastMonthSales | number:'1.2-2' }}</p>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex space-x-4">
+        <button 
+          class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+          (click)="openEditProfile()"
+        >
+          Edit Profile
+        </button>
+        <button 
+          class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+          (click)="logout()"
+        >
+          Logout
+        </button>
+      </div>
+    </div>
+  </div>

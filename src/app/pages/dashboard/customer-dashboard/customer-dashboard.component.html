@@ -1,0 +1,56 @@
+<div class="min-h-screen bg-gray-100 p-6">
+    <div class="container mx-auto">
+      <h1 class="text-3xl font-bold mb-6">Customer Dashboard</h1>
+      
+      <!-- Customer Details Card -->
+      <div class="bg-white shadow-md rounded-lg p-6 mb-6">
+        <h2 class="text-2xl font-semibold mb-4">Customer Profile</h2>
+        <div *ngIf="customerDashboardData">
+          <p><strong>Name:</strong> {{ customerDashboardData.customerDetails.name }}</p>
+          <p><strong>Email:</strong> {{ customerDashboardData.customerDetails.email }}</p>
+          <p><strong>Status:</strong> 
+            <span [ngClass]="customerDashboardData.customerDetails.isActive ? 'text-green-600' : 'text-red-600'">
+              {{ customerDashboardData.customerDetails.isActive ? 'Active' : 'Inactive' }}
+            </span>
+          </p>
+          <p><strong>Tickets to Purchase:</strong> {{ customerDashboardData.customerDetails.ticketsToPurchase }}</p>
+          <p><strong>Ticket Retrieval Interval:</strong> {{ customerDashboardData.customerDetails.ticketRetrievalInterval }} days</p>
+        </div>
+      </div>
+  
+      <!-- Purchase Statistics Card -->
+      <div class="bg-white shadow-md rounded-lg p-6 mb-6">
+        <h2 class="text-2xl font-semibold mb-4">Purchase Statistics</h2>
+        <div *ngIf="customerDashboardData">
+          <p><strong>Total Tickets Purchased:</strong> {{ customerDashboardData.customerDetails.totalTicketsPurchased }}</p>
+          <p><strong>Total Spent:</strong> ${{ customerDashboardData.purchaseStatistics.totalSpent | number:'1.2-2' }}</p>
+          <p><strong>Average Tickets per Purchase:</strong> {{ customerDashboardData.purchaseStatistics.averageTicketsPerPurchase | number:'1.2-2' }}</p>
+          <p><strong>Last Month Purchases:</strong> ${{ customerDashboardData.purchaseStatistics.lastMonthPurchases | number:'1.2-2' }}</p>
+        </div>
+      </div>
+  
+   <!-- Action Buttons -->
+   <div class="flex space-x-4">
+    <button
+      class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+      (click)="openEditProfile()"
+    >
+      Edit Profile
+    </button>
+    <button
+      class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+      (click)="logout()"
+    >
+      Logout
+    </button>
+  </div>
+
+  <!-- Profile Edit Modal -->
+  <app-customer-profile-modal 
+    *ngIf="showProfileModal"
+    [initialData]="customerDashboardData.customerDetails"
+    (saveProfileEvent)="updateProfile($event)"
+    (closeModalEvent)="closeProfileModal()"
+  ></app-customer-profile-modal>
+    </div>
+  </div>

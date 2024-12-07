@@ -1,22 +1,22 @@
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
-import { HttpClientModule } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-customer-sign-in',
+  selector: 'app-vendor-sign-in',
   standalone: true,
   imports: [
     ReactiveFormsModule,
     HttpClientModule,
     CommonModule
   ],
-  templateUrl: './customer-sign-in.component.html',
-  styleUrl: './customer-sign-in.component.css'
+  templateUrl: './vendor-sign-in.component.html',
+  styleUrl: './vendor-sign-in.component.css'
 })
-export class CustomerSignInComponent {
+export class VendorSignInComponent {
   loginForm: FormGroup;
   errorMessage: string = '';
 
@@ -33,10 +33,9 @@ export class CustomerSignInComponent {
 
   onSubmit() {
     if (this.loginForm.valid) {
-      this.authService.customerLogin(this.loginForm.value).subscribe({
+      this.authService.vendorLogin(this.loginForm.value).subscribe({
         next: (response) => {
-          // Handle successful login (e.g., store token, navigate)
-          this.router.navigate(['/dashboard']);
+          this.router.navigate(['/vendor-dashboard']);
         },
         error: (error) => {
           this.errorMessage = 'Login failed. Please check your credentials.';
@@ -47,15 +46,15 @@ export class CustomerSignInComponent {
     }
   }
 
-  navigateToRegister() {
-    this.router.navigate(['/vender']);
+  navigateToVendorSignUp() {
+    this.router.navigate(['/vendor-sign-up']);
   }
 
   navigateToForgotPassword() {
-    this.router.navigate(['/forgot-password']);
+    this.router.navigate(['/vendor-forgot-password']);
   }
 
-  navigateToVendorLogin() {
-    this.router.navigate(['/vendor-sign-in']);
+  navigateToCustomerLogin() {
+    this.router.navigate(['/customer-sign-in']);
   }
 }
