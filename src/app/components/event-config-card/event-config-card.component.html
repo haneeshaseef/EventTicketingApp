@@ -1,0 +1,62 @@
+<!-- event-config-card.component.html -->
+<div *ngIf="showCard" class="bg-white shadow-xl rounded-2xl p-6 mb-6">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-2xl font-bold text-blue-600">Event Configuration</h2>
+      <button 
+        *ngIf="isEditable"
+        class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition"
+        (click)="openEventConfigModal()"
+      >
+        Edit Configuration
+      </button>
+    </div>
+  
+    <div class="grid md:grid-cols-2 gap-4">
+      <div>
+        <p>
+          <strong>Event Name:</strong>
+          {{ eventConfigurationData.eventName || 'Not Set' }}
+        </p>
+        <p>
+          <strong>Max Capacity:</strong>
+          {{ eventConfigurationData.maxCapacity || 'Not Set' }}
+        </p>
+        <p>
+          <strong>Customer Retrieval Rate:</strong>
+          {{ eventConfigurationData.customerRetrievalRate || 'Not Set' }}
+        </p>
+      </div>
+      <div>
+        <p>
+          <strong>Configuration Status:</strong>
+          <span 
+            [ngClass]="
+              eventConfigurationData.configured
+                ? 'text-green-600'
+                : 'text-red-600'
+            "
+          >
+            {{ 
+              eventConfigurationData.configured
+                ? "Configured" 
+                : "Not Configured" 
+            }}
+          </span>
+        </p>
+        <p>
+          <strong>Ticket Release Rate:</strong>
+          {{ eventConfigurationData.ticketReleaseRate || 'Not Set' }}
+        </p>
+      </div>
+    </div>
+  
+    <!-- Event Configuration Modal -->
+    <app-event-config-edit-modal
+      *ngIf="isEventConfigModalOpen"
+      [initialData]="eventConfigurationData"
+      (saveConfigEvent)="onSaveEventConfig($event)"
+      (closeModalEvent)="onCloseEventConfigModal()"
+      (errorEvent)="onEventConfigError($event)"
+    >
+    </app-event-config-edit-modal>
+  </div>

@@ -44,13 +44,10 @@ export class VendorSignUpComponent {
 
       this.authService.vendorRegister(vendorData).subscribe({
         next: (response) => {
-          // Handle successful registration
           console.log('Vendor registered successfully', response);
-          // Navigate to login or dashboard
-          this.router.navigate(['/vendor/sign-in']);
+          this.router.navigate(['/vendor-dashboard']);
         },
         error: (error) => {
-          // Handle registration error
           console.error('Registration failed', error);
           this.errorMessage =
             error.error?.message || 'Registration failed. Please try again.';
@@ -66,4 +63,8 @@ export class VendorSignUpComponent {
   navigateToCustomerSignup() {
     this.router.navigate(['/customer-sign-up']);
   }
+
+  navigateToAdminLogin() {
+   this.router.navigate(['/admin-sign-in']);
+    }
 }

@@ -17,11 +17,23 @@ export class CustomerService {
 
   constructor(private http: HttpClient) {}
 
+  // Get all customers
   getCustomerDetails(email: string): Observable<any> {
     return this.http.get(`${this.apiUrl}/details/${email}`);
   }
 
+  // Update customer profile
   updateCustomerProfile(email: string, updateData: CustomerUpdateData): Observable<any> {
     return this.http.put(`${this.apiUrl}/${email}`, updateData);
+  }
+
+  // Start ticket retrieval
+  startTicketRetrieval(customerName: string): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${customerName}/reactivate`, {});
+  }
+
+  // Stop ticket retrieval
+  stopTicketRetrieval(customerName: string): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${customerName}/deactivate`, {});
   }
 }

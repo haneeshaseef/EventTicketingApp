@@ -1,0 +1,122 @@
+<div
+  class="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 p-4"
+>
+  <div class="w-full max-w-md bg-white rounded-xl shadow-2xl overflow-hidden">
+    <div class="p-8">
+      <h2 class="text-center text-3xl font-bold text-gray-800 mb-6">
+        Admin Sign In
+      </h2>
+
+      <form
+        [formGroup]="adminSignInForm"
+        (ngSubmit)="onAdminSubmit()"
+        class="space-y-6"
+      >
+        <div class="relative">
+          <div
+            class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5 text-gray-400"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m9-9a9 9 0 00-9-9v0"
+              />
+            </svg>
+          </div>
+          <input
+            type="text"
+            formControlName="username"
+            placeholder="Admin Username"
+            class="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 focus:border-gray-600 focus:ring-2 focus:ring-gray-200 transition duration-300 ease-in-out"
+            required
+          />
+          <div
+            *ngIf="
+              adminSignInForm.get('username')?.invalid &&
+              (adminSignInForm.get('username')?.dirty ||
+                adminSignInForm.get('username')?.touched)
+            "
+            class="text-red-500 text-xs mt-1"
+          >
+            <div *ngIf="adminSignInForm.get('username')?.hasError('required')">
+              Admin username is required
+            </div>
+          </div>
+        </div>
+
+        <div class="relative">
+          <div
+            class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5 text-gray-400"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+              />
+            </svg>
+          </div>
+          <input
+            type="password"
+            formControlName="password"
+            placeholder="Admin Password"
+            class="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 focus:border-gray-600 focus:ring-2 focus:ring-gray-200 transition duration-300 ease-in-out"
+            required
+          />
+          <div
+            *ngIf="
+              adminSignInForm.get('password')?.invalid &&
+              (adminSignInForm.get('password')?.dirty ||
+                adminSignInForm.get('password')?.touched)
+            "
+            class="text-red-500 text-xs mt-1"
+          >
+            <div *ngIf="adminSignInForm.get('password')?.hasError('required')">
+              Password is required
+            </div>
+            <div *ngIf="adminSignInForm.get('password')?.hasError('minlength')">
+              Password must be at least 6 characters
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="errorMessage" class="text-red-500 text-sm text-center">
+          {{ errorMessage }}
+        </div>
+
+        <button
+          type="submit"
+          [disabled]="adminSignInForm.invalid"
+          class="w-full bg-gray-800 text-white py-3 rounded-lg hover:bg-gray-900 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 disabled:opacity-50"
+        >
+          Admin Sign In
+        </button>
+      </form>
+    </div>
+    <!-- back button -->
+    <div class="mt-6 text-center">
+      <button
+        type="button"
+        (click)="navigateToVendorSignUp()"
+        class="text-sm text-gray-600 hover:text-gray-500 transition duration-300 ease-in-out mb-4"
+      >
+        Back
+      </button>
+    </div>
+  </div>
+</div>

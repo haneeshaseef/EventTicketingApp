@@ -1,48 +1,117 @@
-<div class="min-h-screen bg-gray-100 p-6">
-    <div class="container mx-auto">
-      <h1 class="text-3xl font-bold mb-6">Vendor Dashboard</h1>
-      
+<div class="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-4xl w-full space-y-8">
+    <h1 class="text-center text-4xl font-extrabold text-gray-900">Vendor Dashboard</h1>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Event Configuration Card -->
+      <app-event-config-card
+        [eventConfigurationData]="vendorDashboardData.eventConfiguration"
+        [showCard]="true"
+        [isEditable]="false"
+        class="md:col-span-2"
+      ></app-event-config-card>
+
       <!-- Vendor Details Card -->
-      <div class="bg-white shadow-md rounded-lg p-6 mb-6">
-        <h2 class="text-2xl font-semibold mb-4">Vendor Profile</h2>
-        <div *ngIf="vendorDashboardData">
-          <p><strong>Name:</strong> {{ vendorDashboardData.vendorDetails.name }}</p>
-          <p><strong>Email:</strong> {{ vendorDashboardData.vendorDetails.email }}</p>
-          <p><strong>Status:</strong> 
-            <span [ngClass]="vendorDashboardData.vendorDetails.isActive ? 'text-green-600' : 'text-red-600'">
-              {{ vendorDashboardData.vendorDetails.isActive ? 'Active' : 'Inactive' }}
+      <div class="bg-white shadow-xl rounded-lg p-6">
+        <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Vendor Profile</h2>
+        <div *ngIf="vendorDashboardData" class="space-y-3">
+          <div class="flex justify-between">
+            <span class="font-medium">Name:</span>
+            <span>{{ vendorDashboardData.vendorDetails.name }}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="font-medium">Email:</span>
+            <span>{{ vendorDashboardData.vendorDetails.email }}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="font-medium">Status:</span>
+            <span 
+              [ngClass]="vendorDashboardData.vendorDetails.isActive 
+                ? 'text-green-600' 
+                : 'text-red-600'"
+            >
+              {{ vendorDashboardData.vendorDetails.isActive ? "Active" : "Inactive" }}
             </span>
-          </p>
-          <p><strong>Tickets per Release:</strong> {{ vendorDashboardData.vendorDetails.ticketsPerRelease }}</p>
-          <p><strong>Ticket Release Interval:</strong> {{ vendorDashboardData.vendorDetails.ticketReleaseInterval }} days</p>
+          </div>
+          <div class="flex justify-between">
+            <span class="font-medium">Tickets to Sell:</span>
+            <span>{{ vendorDashboardData.vendorDetails.ticketsTosell }}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="font-medium">Tickets per Release:</span>
+            <span>{{ vendorDashboardData.vendorDetails.ticketsPerRelease }}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="font-medium">Release Interval:</span>
+            <span>{{ vendorDashboardData.vendorDetails.ticketReleaseInterval }} seconds</span>
+          </div>
         </div>
       </div>
 
       <!-- Sales Statistics Card -->
-      <div class="bg-white shadow-md rounded-lg p-6 mb-6">
-        <h2 class="text-2xl font-semibold mb-4">Sales Statistics</h2>
-        <div *ngIf="vendorDashboardData">
-          <p><strong>Total Tickets Sold:</strong> {{ vendorDashboardData.vendorDetails.totalTicketsSold }}</p>
-          <p><strong>Total Revenue:</strong> ${{ vendorDashboardData.salesStatistics.totalRevenue | number:'1.2-2' }}</p>
-          <p><strong>Average Tickets per Sale:</strong> {{ vendorDashboardData.salesStatistics.averageTicketsPerSale | number:'1.2-2' }}</p>
-          <p><strong>Last Month Sales:</strong> ${{ vendorDashboardData.salesStatistics.lastMonthSales | number:'1.2-2' }}</p>
+      <div class="bg-white shadow-xl rounded-lg p-6">
+        <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Sales Statistics</h2>
+        <div *ngIf="vendorDashboardData" class="space-y-3">
+          <div class="flex justify-between">
+            <span class="font-medium">Total Tickets Sold:</span>
+            <span>{{ vendorDashboardData.vendorDetails.totalTicketsSold }}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="font-medium">Total Revenue:</span>
+            <span>Rs. {{ vendorDashboardData.salesStatistics.totalRevenue | number : "1.2-2" }}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="font-medium">Avg. Tickets per Sale:</span>
+            <span>{{ vendorDashboardData.salesStatistics.averageTicketsPerSale | number : "1.2-2" }}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="font-medium">Last Month Sales:</span>
+            <span>${{ vendorDashboardData.salesStatistics.lastMonthSales | number : "1.2-2" }}</span>
+          </div>
         </div>
       </div>
-
-      <!-- Action Buttons -->
-      <div class="flex space-x-4">
-        <button 
-          class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-          (click)="openEditProfile()"
-        >
-          Edit Profile
-        </button>
-        <button 
-          class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-          (click)="logout()"
-        >
-          Logout
-        </button>
-      </div>
     </div>
+
+    <!-- Action Buttons -->
+    <div class="flex justify-center space-x-4">
+      <button
+        class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition duration-300 ease-in-out transform hover:scale-105"
+        (click)="openEditProfile()"
+      >
+        Edit Profile
+      </button>
+      <button
+        class="bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600 transition duration-300 ease-in-out transform hover:scale-105"
+        (click)="logout()"
+      >
+        Logout
+      </button>
+
+      <!-- Start/Stop Operation Buttons -->
+      <ng-container *ngIf="vendorDashboardData">
+        <button
+          *ngIf="!vendorDashboardData.vendorDetails.isActive"
+          class="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 transition duration-300 ease-in-out transform hover:scale-105"
+          (click)="startVendorOperation()"
+        >
+          Start Ticket Release
+        </button>
+        <button
+          *ngIf="vendorDashboardData.vendorDetails.isActive"
+          class="bg-yellow-500 text-white px-6 py-2 rounded-lg hover:bg-yellow-600 transition duration-300 ease-in-out transform hover:scale-105"
+          (click)="stopVendorOperation()"
+        >
+          Stop Ticket Release
+        </button>
+      </ng-container>
+    </div>
+
+    <app-vendor-profile-modal
+      *ngIf="showProfileModal"
+      [initialData]="vendorDashboardData.vendorDetails"
+      (saveProfileEvent)="updateProfile($event)"
+      (closeModalEvent)="closeProfileModal()"
+    >
+    </app-vendor-profile-modal>
   </div>
+</div>

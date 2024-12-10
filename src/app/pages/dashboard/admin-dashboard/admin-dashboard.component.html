@@ -1,0 +1,128 @@
+<div class="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 p-6">
+  <div class="container mx-auto max-w-7xl">
+    <h1 class="text-4xl font-extrabold text-gray-800 mb-8 text-center">
+      Event Ticketing Admin Dashboard
+    </h1>
+
+    <!-- Loading Indicator -->
+    <div *ngIf="isLoading" class="flex justify-center items-center h-64">
+      <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"></div>
+    </div>
+
+    <!-- Dashboard Content -->
+    <ng-container *ngIf="!isLoading">
+      <!-- Event Configuration Card -->
+      <app-event-config-card
+        *ngIf="adminDashboardData.eventConfiguration"
+        class="block mb-6"
+        [eventConfigurationData]="adminDashboardData.eventConfiguration"
+        [showCard]="true"
+        [isEditable]="true"
+        (saveConfigEvent)="onSaveEventConfig($event)"
+        (errorEvent)="onEventConfigError($event)"
+      ></app-event-config-card>
+
+      <!-- Statistics Section -->
+      <div class="grid md:grid-cols-2 gap-6 mb-6">
+        <!-- Ticket Statistics Card -->
+        <div class="bg-white shadow-xl rounded-2xl p-6">
+          <h2 class="text-2xl font-bold text-green-600 mb-4">
+            Ticket Statistics
+          </h2>
+          <div class="grid grid-cols-1 gap-4">
+            <div>
+              <p>
+                <strong>Total Available Tickets:</strong>
+                {{ adminDashboardData.ticketStatistics.availableTickets || 0 }}
+              </p>
+              <p>
+                <strong>Total Tickets:</strong>
+                {{ adminDashboardData.ticketStatistics.totalTickets || 0 }}
+              </p>
+            </div>
+            <div>
+              <h3 class="font-semibold mb-2">
+                Vendor Ticket Distribution
+              </h3>
+              <div 
+                *ngFor="let vendor of adminDashboardData.ticketStatistics.vendorTicketDistribution | keyvalue"
+              >
+                <p>{{ vendor.key }}: {{ vendor.value || 0 }} tickets</p>
+              </div>
+            </div>
+            <div>
+              <h3 class="font-semibold mb-2">
+                Customer Ticket Distribution
+              </h3>
+              <div 
+                *ngFor="let customer of adminDashboardData.ticketStatistics.customerTicketDistribution | keyvalue"
+              >
+                <p>{{ customer.key }}: {{ customer.value || 0 }} tickets</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Revenue Statistics Card -->
+        <div class="bg-white shadow-xl rounded-2xl p-6">
+          <h2 class="text-2xl font-bold text-purple-600 mb-4">
+            Revenue Statistics
+          </h2>
+          <div class="grid grid-cols-1 gap-4">
+            <div>
+              <p>
+                <strong>Total Revenue:</strong> Rs.{{
+                  adminDashboardData.revenueStatistics.totalRevenue || 0 | number: '1.2-2'
+                }}
+              </p>
+              <p>
+                <strong>Average Ticket Price:</strong> Rs.{{
+                  adminDashboardData.revenueStatistics.averageTicketPrice || 0 | number: '1.2-2'
+                }}
+              </p>
+            </div>
+            <div>
+              <p>
+                <strong>Last Month Revenue:</strong> Rs.{{
+                  adminDashboardData.revenueStatistics.lastMonthRevenue || 0 | number: '1.2-2'
+                }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- System Logs Section -->
+      <app-log-view-card 
+        *ngIf="logStatistics"
+        class="block mb-6"
+      ></app-log-view-card>
+
+      <!-- Action Buttons -->
+      <div class="flex justify-center space-x-4">
+        <button
+          class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition"
+          (click)="refreshDashboard()"
+        >
+          Refresh Dashboard
+        </button>
+        <button
+          class="bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600 transition"
+          (click)="logout()"
+        >
+          Logout
+        </button>
+      </div>
+
+      <!-- Event Configuration Modal -->
+      <app-event-config-edit-modal
+        *ngIf="isEventConfigModalOpen"
+        [initialData]="adminDashboardData.eventConfiguration"
+        (saveConfigEvent)="onSaveEventConfig($event)"
+        (closeModalEvent)="onCloseEventConfigModal()"
+        (errorEvent)="onEventConfigError($event)"
+      >
+      </app-event-config-edit-modal>
+    </ng-container>
+  </div>
+</div>

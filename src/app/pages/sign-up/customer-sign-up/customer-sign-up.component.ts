@@ -44,7 +44,7 @@ export class CustomerSignUpComponent implements OnInit {
       this.authService.customerRegister(customerData).subscribe({
         next: (response) => {
           console.log('Customer registered successfully', response);
-          this.router.navigate(['/customer/sign-in']);
+          this.router.navigate(['/customer-dashboard']);
         },
         error: (error) => {
           console.error('Registration failed', error);

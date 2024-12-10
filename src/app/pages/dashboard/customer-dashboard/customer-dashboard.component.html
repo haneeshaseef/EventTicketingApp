@@ -1,56 +1,113 @@
-<div class="min-h-screen bg-gray-100 p-6">
-    <div class="container mx-auto">
-      <h1 class="text-3xl font-bold mb-6">Customer Dashboard</h1>
-      
+<div class="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-4xl w-full space-y-8">
+    <h1 class="text-center text-4xl font-extrabold text-gray-900">Customer Dashboard</h1>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Event Configuration Card -->
+      <app-event-config-card
+        [eventConfigurationData]="customerDashboardData.eventConfiguration"
+        [showCard]="true"
+        [isEditable]="false"
+        class="md:col-span-2"
+      ></app-event-config-card>
+
       <!-- Customer Details Card -->
-      <div class="bg-white shadow-md rounded-lg p-6 mb-6">
-        <h2 class="text-2xl font-semibold mb-4">Customer Profile</h2>
-        <div *ngIf="customerDashboardData">
-          <p><strong>Name:</strong> {{ customerDashboardData.customerDetails.name }}</p>
-          <p><strong>Email:</strong> {{ customerDashboardData.customerDetails.email }}</p>
-          <p><strong>Status:</strong> 
-            <span [ngClass]="customerDashboardData.customerDetails.isActive ? 'text-green-600' : 'text-red-600'">
+      <div class="bg-white shadow-xl rounded-lg p-6">
+        <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Customer Profile</h2>
+        <div *ngIf="customerDashboardData" class="space-y-3">
+          <div class="flex justify-between">
+            <span class="font-medium">Name:</span>
+            <span>{{ customerDashboardData.customerDetails.name }}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="font-medium">Email:</span>
+            <span>{{ customerDashboardData.customerDetails.email }}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="font-medium">Status:</span>
+            <span 
+              [ngClass]="customerDashboardData.customerDetails.isActive 
+                ? 'text-green-600' 
+                : 'text-red-600'"
+            >
               {{ customerDashboardData.customerDetails.isActive ? 'Active' : 'Inactive' }}
             </span>
-          </p>
-          <p><strong>Tickets to Purchase:</strong> {{ customerDashboardData.customerDetails.ticketsToPurchase }}</p>
-          <p><strong>Ticket Retrieval Interval:</strong> {{ customerDashboardData.customerDetails.ticketRetrievalInterval }} days</p>
+          </div>
+          <div class="flex justify-between">
+            <span class="font-medium">Tickets to Purchase:</span>
+            <span>{{ customerDashboardData.customerDetails.ticketsToPurchase }}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="font-medium">Ticket Retrieval Interval:</span>
+            <span>{{ customerDashboardData.customerDetails.ticketRetrievalInterval }} seconds</span>
+          </div>
         </div>
       </div>
-  
-      <!-- Purchase Statistics Card -->
-      <div class="bg-white shadow-md rounded-lg p-6 mb-6">
-        <h2 class="text-2xl font-semibold mb-4">Purchase Statistics</h2>
-        <div *ngIf="customerDashboardData">
-          <p><strong>Total Tickets Purchased:</strong> {{ customerDashboardData.customerDetails.totalTicketsPurchased }}</p>
-          <p><strong>Total Spent:</strong> ${{ customerDashboardData.purchaseStatistics.totalSpent | number:'1.2-2' }}</p>
-          <p><strong>Average Tickets per Purchase:</strong> {{ customerDashboardData.purchaseStatistics.averageTicketsPerPurchase | number:'1.2-2' }}</p>
-          <p><strong>Last Month Purchases:</strong> ${{ customerDashboardData.purchaseStatistics.lastMonthPurchases | number:'1.2-2' }}</p>
-        </div>
-      </div>
-  
-   <!-- Action Buttons -->
-   <div class="flex space-x-4">
-    <button
-      class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-      (click)="openEditProfile()"
-    >
-      Edit Profile
-    </button>
-    <button
-      class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-      (click)="logout()"
-    >
-      Logout
-    </button>
-  </div>
 
-  <!-- Profile Edit Modal -->
-  <app-customer-profile-modal 
-    *ngIf="showProfileModal"
-    [initialData]="customerDashboardData.customerDetails"
-    (saveProfileEvent)="updateProfile($event)"
-    (closeModalEvent)="closeProfileModal()"
-  ></app-customer-profile-modal>
+      <!-- Purchase Statistics Card -->
+      <div class="bg-white shadow-xl rounded-lg p-6">
+        <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Purchase Statistics</h2>
+        <div *ngIf="customerDashboardData" class="space-y-3">
+          <div class="flex justify-between">
+            <span class="font-medium">Total Tickets Purchased:</span>
+            <span>{{ customerDashboardData.customerDetails.totalTicketsPurchased }}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="font-medium">Total Spent:</span>
+            <span>Rs. {{ customerDashboardData.purchaseStatistics.totalSpent | number:'1.2-2' }}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="font-medium">Avg. Tickets per Purchase:</span>
+            <span>{{ customerDashboardData.purchaseStatistics.averageTicketsPerPurchase | number:'1.2-2' }}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="font-medium">Last Month Purchases:</span>
+            <span>${{ customerDashboardData.purchaseStatistics.lastMonthPurchases | number:'1.2-2' }}</span>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <!-- Action Buttons -->
+    <div class="flex justify-center space-x-4">
+      <button
+        class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition duration-300 ease-in-out transform hover:scale-105"
+        (click)="openEditProfile()"
+      >
+        Edit Profile
+      </button>
+      <button
+        class="bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600 transition duration-300 ease-in-out transform hover:scale-105"
+        (click)="logout()"
+      >
+        Logout
+      </button>
+
+      <!-- Start/Stop Operation Buttons -->
+      <ng-container *ngIf="customerDashboardData">
+        <button
+          *ngIf="!customerDashboardData.customerDetails.isActive"
+          class="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 transition duration-300 ease-in-out transform hover:scale-105"
+          (click)="startCustomerOperation()"
+        >
+          Start Ticket Purchase
+        </button>
+        <button
+          *ngIf="customerDashboardData.customerDetails.isActive"
+          class="bg-yellow-500 text-white px-6 py-2 rounded-lg hover:bg-yellow-600 transition duration-300 ease-in-out transform hover:scale-105"
+          (click)="stopCustomerOperation()"
+        >
+          Stop Ticket Purchase
+        </button>
+      </ng-container>
+    </div>
+
+    <!-- Profile Edit Modal -->
+    <app-customer-profile-modal
+      *ngIf="showProfileModal"
+      [initialData]="customerDashboardData.customerDetails"
+      (saveProfileEvent)="updateProfile($event)"
+      (closeModalEvent)="closeProfileModal()"
+    ></app-customer-profile-modal>
   </div>
+</div>

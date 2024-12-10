@@ -20,14 +20,12 @@ export class CustomerProfileModalComponent {
   validationErrors: string[] = [];
 
   ngOnInit() {
-    // Clone the initial data to avoid direct mutation
     this.customerData = { ...this.initialData };
   }
 
+  // Validate the customer profile data
   validateProfile(): boolean {
     this.validationErrors = [];
-
-    // Example validation rules
     if (!this.customerData.name || this.customerData.name.trim() === '') {
       this.validationErrors.push('Name is required');
     }
@@ -44,24 +42,25 @@ export class CustomerProfileModalComponent {
   }
 
   private isValidEmail(email: string): boolean {
+    //Ref: https://emailregex.com/
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   }
 
+  // Save the customer profile data
   saveProfileHandler() {
     if (this.validateProfile()) {
       try {
         this.saveProfileEvent.emit(this.customerData);
       } catch (error) {
-        // Emit any unexpected errors
         this.errorEvent.emit(error instanceof Error ? error.message : 'An unexpected error occurred');
       }
     } else {
-      // Emit validation errors
       this.errorEvent.emit(this.validationErrors.join(', '));
     }
   }
 
+  // Close the modal
   closeModal() {
     this.closeModalEvent.emit();
   }

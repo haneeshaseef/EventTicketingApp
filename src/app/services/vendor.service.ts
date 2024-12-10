@@ -2,6 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+export interface VendorUpdateData {
+  name?: string;
+  email?: string;
+  ticketsPerRelease?: number;
+  ticketReleaseInterval?: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -10,11 +17,22 @@ export class VendorService {
 
   constructor(private http: HttpClient) {}
 
+  // Get all vendors
   getVendorDetails(email: string): Observable<any> {
     return this.http.get(`${this.apiUrl}/details/${email}`);
   }
 
-  updateVendorProfile(email: string, vendorData: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${email}`, vendorData);
+  // Get all vendors
+  updateVendorProfile(email: string, updatedData: VendorUpdateData): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${email}`,updatedData);
+  }
+
+  // Get all vendors
+  startTicketRelease(vendorName: string): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${vendorName}/reactivate`, {});
+  }
+  // Get all vendors
+  stopTicketRelease(vendorName: string): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${vendorName}/deactivate`, {});
   }
 }
