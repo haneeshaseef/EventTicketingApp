@@ -49,6 +49,7 @@ export class AdminSignInComponent {
           this.router.navigate(['/admin-dashboard']);
         },
         error: (error) => {
+          this.router.navigate(['/admin-sign-in']);
           this.errorMessage = 'Invalid admin credentials. Please try again.';
         },
       });

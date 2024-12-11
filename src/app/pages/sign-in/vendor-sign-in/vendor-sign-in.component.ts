@@ -38,6 +38,7 @@ export class VendorSignInComponent {
           this.router.navigate(['/vendor-dashboard']);
         },
         error: (error) => {
+          this.router.navigate(['/vendor-sign-in']);
           this.errorMessage = 'Login failed. Please check your credentials.';
         }
       });

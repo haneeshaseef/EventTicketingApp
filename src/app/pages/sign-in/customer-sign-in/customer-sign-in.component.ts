@@ -38,6 +38,7 @@ export class CustomerSignInComponent {
           this.router.navigate(['/customer-dashboard']);
         },
         error: (error) => {
+          this.router.navigate(['/customer-sign-in']);
           this.errorMessage = 'Login failed. Please check your credentials.';
         }
       });

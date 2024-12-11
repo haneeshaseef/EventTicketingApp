@@ -45,7 +45,7 @@ export class VendorSignUpComponent {
       this.authService.vendorRegister(vendorData).subscribe({
         next: (response) => {
           console.log('Vendor registered successfully', response);
-          this.router.navigate(['/vendor-dashboard']);
+          this.router.navigate(['/vendor-sign-in']);
         },
         error: (error) => {
           console.error('Registration failed', error);
