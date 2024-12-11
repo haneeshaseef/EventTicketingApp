@@ -63,7 +63,7 @@ export class VendorDashboardComponent implements OnInit {
     this.loadVendorDashboardData();
   }
 
-  // Load vendor dashboard data from the server
+  // Load vendor dashboard data
   loadVendorDashboardData() {
     const vendorEmail = this.authService.getCurrentVendorEmail();
 
@@ -129,7 +129,6 @@ export class VendorDashboardComponent implements OnInit {
 
     this.vendorService.updateVendorProfile(vendorEmail, updatedData).subscribe({
       next: (response) => {
-        // Update local data with response and update to data based on the response
         this.vendorDashboardData.vendorDetails = {
           ...this.vendorDashboardData.vendorDetails,
           ...updatedData
